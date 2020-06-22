@@ -1,4 +1,4 @@
-# [🐋 scanservjs](https://github.com/guillaumedsde/docker-scanservjs)
+# [🐋 docker-scanservjs](https://github.com/guillaumedsde/docker-scanservjs)
 
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/guillaumedsde/docker-scanservjs)](https://gitlab.com/guillaumedsde/docker-scanservjs/-/pipelines)
 [![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/guillaumedsde/docker-scanservjs)](https://gitlab.com/guillaumedsde/docker-scanservjs/-/pipelines)
@@ -11,6 +11,8 @@
 [![GitHub watchers](https://img.shields.io/github/watchers/guillaumedsde/docker-scanservjs?label=Github%20Watchers)](https://github.com/guillaumedsde/docker-scanservjs)
 [![Docker Stars](https://img.shields.io/docker/stars/guillaumedsde/docker-scanservjs)](https://hub.docker.com/r/guillaumedsde/docker-scanservjs)
 [![GitHub](https://img.shields.io/github/license/guillaumedsde/docker-scanservjs)](https://github.com/guillaumedsde/docker-scanservjs/blob/master/LICENSE.md)
+
+Alpine Linux based docker container for scanservjs with all sane-backends in alpine repositories, built for many different architectures.
 
 ## ✔️ Features summary
 
@@ -35,15 +37,15 @@ $ docker run --privileged \
 version: "3.3"
 services:
   docker-scanservjs:
-    privileged: false
+    privileged: true
     ports:
       - "8080:8080"
     image: "guillaumedsde/docker-scanservjs:latest"
 ```
 
-## 🖥️ Supported platforms
+## 🖥️ Supported architectures
 
-This container is built for many hardware platforms (yes, even ppc64le whoever uses that... 😉):
+This container is built for many hardware architectures (yes, even ppc64le whoever uses that... 😉):
 
 - linux/386
 - linux/amd64
