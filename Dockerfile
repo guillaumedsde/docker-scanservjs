@@ -30,7 +30,7 @@ RUN ARCH="$(uname -m)" \
 
 WORKDIR "/rootfs$APP_DIR"
 
-RUN cp -r "$APP_DIR/build/scanservjs/." .
+RUN cp -r "$APP_DIR/build/." .
 
 RUN npm install --production
 
@@ -47,7 +47,8 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
     org.label-schema.schema-version="1.0"
 
 ENV APP_DIR="/app" \
-    NET_HOST=""
+    NET_HOST="" \
+    NODE_ENV="production"
 
 WORKDIR "$APP_DIR"
 
