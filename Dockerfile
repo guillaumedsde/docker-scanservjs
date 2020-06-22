@@ -55,6 +55,7 @@ WORKDIR "$APP_DIR"
 RUN apk add --no-cache \
     sane \
     sane-utils \
+    sane-backends \
     imagemagick 
 
 COPY --from=builder /rootfs /
