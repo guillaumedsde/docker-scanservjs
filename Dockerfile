@@ -56,6 +56,7 @@ RUN apk add --no-cache \
     sane \
     sane-utils \
     sane-backends \
+    sane-udev \
     imagemagick 
 
 COPY --from=builder /rootfs /
