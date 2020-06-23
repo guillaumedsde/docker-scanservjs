@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv sh
+
+[ ! -z "$NET_HOST" ] && echo "$NET_HOST" >/etc/sane.d/net.conf

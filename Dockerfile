@@ -52,7 +52,8 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 
 ENV APP_DIR="/app" \
     NET_HOST="" \
-    NODE_ENV="production"
+    NODE_ENV="production" \
+    S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
 WORKDIR "$APP_DIR"
 
