@@ -14,6 +14,8 @@ RUN npm install
 COPY . "$APP_DIR"
 RUN npm run build
 
+RUN cp -r node_modules/bootstrap/dist/* build/scanservjs/assets/
+
 WORKDIR /rootfs
 
 RUN ARCH="$(uname -m)" \
@@ -30,9 +32,11 @@ RUN ARCH="$(uname -m)" \
 
 WORKDIR "/rootfs$APP_DIR"
 
-RUN cp -r "$APP_DIR/build/." .
+RUN cp -r "$APP_DIR/build/scanservjs/." .
 
 RUN npm install --production
+
+COPY rootfs /rootfs
 
 # production image
 FROM node:alpine
@@ -61,7 +65,6 @@ RUN apk add --no-cache \
     imagemagick 
 
 COPY --from=builder /rootfs /
-COPY rootfs /
 
 EXPOSE 8080
 
