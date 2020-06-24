@@ -22,7 +22,42 @@ Alpine Linux based docker container for scanservjs with all sane-backends in alp
 
 ## 🏁 How to Run
 
+You need to find the location of your scanner device in order to mount it to the container.
+The [debian documentation](https://wiki.debian.org/Scanner) for scanners has good info, but the gist of it is that you can find currently attached scanners with `sane-find-scanner`, the output should contain something resembling this:
+
+```
+found USB scanner (vendor=0x04f9, product=0x0182) at libusb:008:002
+```
+
+In this example; the usb address of the device is **008**:**002** so it is located at `/dev/bus/usb/008/002` and I can mount it in the container (see below).
+
 ### `docker run`
+
+```bash
+$ docker run --device=/dev/bus/usb/008/002:/dev/bus/usb/008/002 \
+              -p 8080:8080 \
+              guillaumedsde/docker-scanservjs:latest
+```
+
+### `docker-compose.yml`
+
+```yaml
+version: "3.3"
+services:
+  docker-scanservjs:
+    devices:
+      - "/dev/bus/usb/008/002:/dev/bus/usb/008/002"
+    ports:
+      - "8080:8080"
+    image: "guillaumedsde/docker-scanservjs:latest"
+```
+
+### **unsecure** `privileged` flag
+
+This method should only really be used for debugging as it gives the container full access to the host device by running the container with the `privileged` flag on.
+If you are having issues detecting your scanner with the container, you can try this to see if it is detected without needing to mount your scanner device to the container.
+
+#### `docker run`
 
 ```bash
 $ docker run --privileged \
@@ -30,7 +65,7 @@ $ docker run --privileged \
               guillaumedsde/docker-scanservjs:latest
 ```
 
-### `docker-compose.yml`
+#### `docker-compose.yml`
 
 ```yaml
 version: "3.3"
