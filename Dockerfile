@@ -2,10 +2,12 @@ FROM node:alpine AS builder
 
 ARG APP_DIR=/app
 ARG S6_VERSION=v2.0.0.1
+ARG SCANSERVJS_VERSION=HEAD
 WORKDIR "$APP_DIR"
 
 RUN apk add --no-cache git  \
-    && git clone https://github.com/sbs20/scanservjs.git .
+    && git clone https://github.com/sbs20/scanservjs.git . &&\
+    git checkout "${SCANSERVJS_VERSION}"
 
 # install build dependencies
 RUN npm install
