@@ -1,6 +1,8 @@
 #!/bin/sh
 
-VERSION="$(git ls-remote https://github.com/sbs20/scanservjs.git HEAD | awk '{ print $1}')"
+LATEST_VERSION="$(git ls-remote https://github.com/sbs20/scanservjs.git HEAD | awk '{ print $1}')"
+
+VERSION=${VERSION:-LATEST_VERSION}
 
 if [ "${CI_COMMIT_REF_NAME}" = "master" ]; then
     TAGS=" -t ${CI_REGISTRY_USER}/docker-scanservjs:${VERSION} -t ${CI_REGISTRY_USER}/docker-scanservjs:latest "

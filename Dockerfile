@@ -1,13 +1,15 @@
+ARG VERSION=HEAD
+
 FROM node:alpine AS builder
 
 ARG APP_DIR=/app
 ARG S6_VERSION=v2.0.0.1
-ARG SCANSERVJS_VERSION=HEAD
+ARG VERSION
 WORKDIR "$APP_DIR"
 
 RUN apk add --no-cache git  \
     && git clone https://github.com/sbs20/scanservjs.git . &&\
-    git checkout "${SCANSERVJS_VERSION}"
+    git checkout "${VERSION}"
 
 # install build dependencies
 RUN npm install
@@ -42,6 +44,8 @@ COPY rootfs /rootfs
 
 # production image
 FROM node:alpine
+
+ARG VERSION
 
 LABEL org.label-schema.build-date=$BUILD_DATE \
     org.label-schema.name="docker-scanservjs" \
