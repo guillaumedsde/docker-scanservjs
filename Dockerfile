@@ -16,7 +16,8 @@ RUN npm install
 
 # run a gulp build
 COPY . "$APP_DIR"
-RUN npm run server-build
+RUN npm run server-build \
+    && mkdir -p build/scanservjs/assets/
 
 RUN cp -r node_modules/bootstrap/dist/* build/scanservjs/assets/
 
