@@ -1,3 +1,4 @@
 #!/usr/bin/with-contenv sh
+# shellcheck shell=sh
 
 scanimage -L

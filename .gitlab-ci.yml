@@ -18,7 +18,7 @@ shellcheck:
   before_script:
     - shellcheck --version
   script:
-    - shellcheck **/*.sh  # path to your shell scripts
+    - shellcheck **/*.sh rootfs/etc/*.d/**/* # path to your shell scripts
 
 build:
   image: registry.gitlab.com/ix.ai/docker-buildx-qemu:latest
