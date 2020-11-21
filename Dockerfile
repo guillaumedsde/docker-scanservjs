@@ -2,12 +2,12 @@ ARG VERSION=HEAD
 
 FROM node:alpine AS builder
 
-ARG APP_DIR=/app
 ARG S6_VERSION=v2.0.0.1
 ARG VERSION
-WORKDIR "$APP_DIR"
+WORKDIR /app
 
-RUN apk add --no-cache git  \
+# hadolint ignore=DL3018
+RUN apk add --no-cache git python build-base \
     && git clone https://github.com/sbs20/scanservjs.git . &&\
     git checkout "${VERSION}"
 
@@ -15,29 +15,11 @@ RUN apk add --no-cache git  \
 RUN npm install
 
 # run a gulp build
-COPY . "$APP_DIR"
-RUN npm run server-build \
-    && mkdir -p build/scanservjs/assets/
+RUN npm run server-build && npm run client-build
 
-RUN cp -r node_modules/bootstrap/dist/* build/scanservjs/assets/
+WORKDIR /rootfs/app
 
-WORKDIR /rootfs
-
-RUN ARCH="$(uname -m)" \
-    && echo building for "${ARCH}" \
-    && if [ "${ARCH}" = "x86_64" ]; then S6_ARCH=amd64; \
-    elif [ "${ARCH}" = "i386" ]; then S6_ARCH=X86; \
-    elif echo "${ARCH}" | grep -E -q "armv6|armv7"; then S6_ARCH=arm; \
-    else S6_ARCH="${ARCH}"; \
-    fi \
-    && echo using architecture "${S6_ARCH}" for S6 Overlay \
-    && wget -O "s6.tgz" "https://github.com/just-containers/s6-overlay/releases/download/${S6_VERSION}/s6-overlay-${S6_ARCH}.tar.gz" \
-    && tar xzf "s6.tgz" -C . \ 
-    && rm "s6.tgz"
-
-WORKDIR "/rootfs$APP_DIR"
-
-RUN cp -r "$APP_DIR/build/scanservjs/." .
+RUN mv /app/dist/* ./
 
 RUN npm install --production
 
@@ -62,15 +44,19 @@ ENV APP_DIR="/app" \
     NODE_ENV="production" \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
-WORKDIR "$APP_DIR"
+WORKDIR /app
 
 # Install sane
+# hadolint ignore=DL3018
 RUN apk add --no-cache \
     sane \
     sane-utils \
     sane-backends \
     sane-udev \
-    imagemagick 
+    imagemagick \
+    tesseract-ocr \
+    && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
+    s6-overlay
 
 COPY --from=builder /rootfs /
 

@@ -4,4 +4,4 @@
 set -xve
 
 cd "$APP_DIR"
-exec node server.js
+exec node ./server/server.js
