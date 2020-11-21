@@ -1,6 +1,6 @@
 ARG VERSION=HEAD
 
-FROM node:alpine AS builder
+FROM node:15-alpine3.12 AS builder
 
 ARG S6_VERSION=v2.0.0.1
 ARG VERSION
@@ -26,7 +26,7 @@ RUN npm install --production
 COPY rootfs /rootfs
 
 # production image
-FROM node:alpine
+FROM node:15-alpine3.12
 
 ARG VERSION
 

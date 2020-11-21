@@ -81,7 +81,6 @@ services:
 
 This container is built for many hardware architectures (yes, even ppc64le whoever uses that... 😉):
 
-- linux/386
 - linux/amd64
 - linux/arm/v6
 - linux/arm/v7
@@ -90,6 +89,8 @@ This container is built for many hardware architectures (yes, even ppc64le whoev
 - linux/s390x
 
 All you have to do is use a recent version of docker and it will pull the appropriate version of the image [guillaumedsde/docker-scanservjs](https://hub.docker.com/repository/docker/guillaumedsde/docker-scanservjs) from the docker hub.
+
+**note:** this image is no longer built for `linux/386` as the official NodeJS image has dropped support for this platform. If you need a build for this platform, I might be able to arrange it, open an issue.
 
 ## 🙏 Credits
 
