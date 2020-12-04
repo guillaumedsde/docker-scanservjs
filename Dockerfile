@@ -7,7 +7,7 @@ ARG VERSION
 WORKDIR /app
 
 # hadolint ignore=DL3018
-RUN apk add --no-cache git python2 build-base \
+RUN apk add --no-cache git python build-base \
     && git clone https://github.com/sbs20/scanservjs.git . &&\
     git checkout "${VERSION}"
 
