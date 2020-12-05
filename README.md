@@ -85,8 +85,10 @@ This container is built for many hardware architectures (yes, even ppc64le whoev
 - linux/arm/v6
 - linux/arm/v7
 - linux/arm64
-- linux/ppc64le
-- linux/s390x
+- ~~linux/ppc64le~~
+- ~~linux/s390x~~
+
+*note: the CI is having timeouts when running `npm install` on these disabled platforms, I have temporarily disabled them*
 
 All you have to do is use a recent version of docker and it will pull the appropriate version of the image [guillaumedsde/docker-scanservjs](https://hub.docker.com/repository/docker/guillaumedsde/docker-scanservjs) from the docker hub.
 
