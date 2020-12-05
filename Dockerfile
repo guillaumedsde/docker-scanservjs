@@ -12,7 +12,7 @@ RUN apk add --no-cache git python2 build-base \
     git checkout "${VERSION}"
 
 # install build dependencies
-RUN npm install
+RUN npm ci
 
 # run a gulp build
 RUN npm run server-build && npm run client-build
@@ -21,7 +21,7 @@ WORKDIR /rootfs/app
 
 RUN mv /app/dist/* ./
 
-RUN npm install --production
+RUN npm ci --only=production
 
 COPY rootfs /rootfs
 
